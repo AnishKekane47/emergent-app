@@ -10,7 +10,6 @@ from pydantic import BaseModel, Field, EmailStr
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
-import socketio
 
 # Import our modules
 from auth import (
