@@ -7,10 +7,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Header from '../components/Header';
 import { toast } from 'sonner';
+import { useAuth } from '../context/AuthContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000';
 
-export default function Transactions({ user, setUser }) {
+export default function Transactions() {
+  useAuth();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -67,7 +69,7 @@ export default function Transactions({ user, setUser }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <Header user={user} setUser={setUser} />
+      <Header />
 
       <main className="max-w-7xl mx-auto px-6 py-8" data-testid="transactions-page">
         <div className="mb-8">

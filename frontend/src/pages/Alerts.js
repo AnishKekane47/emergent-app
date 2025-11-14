@@ -7,10 +7,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import Header from '../components/Header';
 import { toast } from 'sonner';
+import { useAuth } from '../context/AuthContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000';
 
-export default function Alerts({ user, setUser }) {
+export default function Alerts() {
+  useAuth();
   const [alerts, setAlerts] = useState([]);
   const [selectedAlert, setSelectedAlert] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -68,7 +70,7 @@ export default function Alerts({ user, setUser }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <Header user={user} setUser={setUser} unreadAlerts={alerts.filter(a => a.status === 'pending').length} />
+      <Header unreadAlerts={alerts.filter(a => a.status === 'pending').length} />
 
       <main className="max-w-7xl mx-auto px-6 py-8" data-testid="alerts-page">
         <div className="mb-8">

@@ -1,17 +1,17 @@
-import { Shield, LogOut, Bell } from 'lucide-react';
+import { Shield, LogOut } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { logout } from '../utils/auth';
+import { useAuth } from '../context/AuthContext';
 
-export default function Header({ user, setUser, unreadAlerts = 0 }) {
+export default function Header({ unreadAlerts = 0 }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   const handleLogout = async () => {
     await logout();
-    setUser(null);
-    navigate('/');
+    navigate('/login');
   };
 
   const navItems = [
@@ -61,7 +61,7 @@ export default function Header({ user, setUser, unreadAlerts = 0 }) {
               <Avatar className="w-9 h-9 border-2 border-blue-100">
                 <AvatarImage src={user?.picture} alt={user?.name} />
                 <AvatarFallback className="bg-gradient-to-br from-blue-500 to-indigo-500 text-white font-semibold">
-                  {user?.name?.charAt(0).toUpperCase()}
+                  {user?.name ? user.name.charAt(0).toUpperCase() : '?'}
                 </AvatarFallback>
               </Avatar>
               <div className="hidden sm:block">

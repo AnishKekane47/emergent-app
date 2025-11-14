@@ -6,13 +6,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
 import Header from '../components/Header';
 import { toast } from 'sonner';
+import { useAuth } from '../context/AuthContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000';
 
-export default function Rules({ user, setUser }) {
+export default function Rules() {
+  useAuth();
   const [rules, setRules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
@@ -128,7 +129,7 @@ export default function Rules({ user, setUser }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <Header user={user} setUser={setUser} />
+      <Header />
 
       <main className="max-w-7xl mx-auto px-6 py-8" data-testid="rules-page">
         <div className="mb-8 flex items-center justify-between">

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './api/axiosConfig'; // Initialize axios config first
 import './index.css';
 import App from './App';
 import '@fontsource/space-grotesk/400.css';

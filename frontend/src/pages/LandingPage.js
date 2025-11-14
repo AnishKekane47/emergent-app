@@ -1,11 +1,10 @@
 import { Shield, AlertTriangle, Brain, Bell, TrendingUp, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { EMERGENT_AUTH_URL } from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
-  const handleLogin = () => {
-    window.location.href = EMERGENT_AUTH_URL;
-  };
+  const navigate = useNavigate();
+  const handleLogin = () => navigate('/login');
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
@@ -18,7 +17,7 @@ export default function LandingPage() {
             </div>
             <span className="text-2xl font-bold" style={{fontFamily: 'Space Grotesk, sans-serif'}}>FraudRadar</span>
           </div>
-          <Button 
+          <Button
             onClick={handleLogin}
             data-testid="header-login-btn"
             className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200"
@@ -48,7 +47,7 @@ export default function LandingPage() {
             Advanced AI and rule-based detection to protect your business from fraudulent transactions in real-time. Get instant alerts and actionable insights.
           </p>
           
-          <Button 
+          <Button
             onClick={handleLogin}
             data-testid="hero-cta-btn"
             className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-10 py-6 text-lg rounded-xl font-bold shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
@@ -88,7 +87,7 @@ export default function LandingPage() {
           <FeatureCard 
             icon={<Lock className="w-8 h-8" />}
             title="Secure & Compliant"
-            description="Enterprise-grade security with Google OAuth authentication and encrypted data storage"
+            description="Enterprise-grade security with password-based login, JWT cookies, and encrypted data storage"
             gradient="from-rose-500 to-orange-500"
           />
           <FeatureCard 
@@ -109,12 +108,12 @@ export default function LandingPage() {
           <p className="text-xl mb-8 opacity-90">
             Start detecting fraud with AI-powered intelligence today
           </p>
-          <Button 
+          <Button
             onClick={handleLogin}
             data-testid="cta-signup-btn"
             className="bg-white text-blue-600 hover:bg-gray-100 px-10 py-6 text-lg rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            Sign Up with Google
+            Create Your Account
           </Button>
         </div>
       </section>

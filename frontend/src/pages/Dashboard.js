@@ -6,19 +6,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Header from '../components/Header';
 import { connectWebSocket, disconnectWebSocket } from '../utils/websocket';
 import { toast } from 'sonner';
+import { useAuth } from '../context/AuthContext';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000';
 
-export default function Dashboard({ user, setUser }) {
+export default function Dashboard() {
+  const { user } = useAuth();
   const [stats, setStats] = useState({ total: 0, critical: 0, high: 0, pending: 0 });
   const [recentAlerts, setRecentAlerts] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!user?.id) return;
     loadDashboardData();
 
-    // Connect WebSocket
     const socket = connectWebSocket(user.id, (alert) => {
       toast.error(`New ${alert.risk_level} Risk Alert!`, {
         description: `Transaction $${alert.amount} at ${alert.merchant}`,
@@ -33,7 +35,7 @@ export default function Dashboard({ user, setUser }) {
     return () => {
       disconnectWebSocket();
     };
-  }, [user.id]);
+  }, [user?.id, navigate]);
 
   const loadDashboardData = async () => {
     try {
@@ -63,7 +65,7 @@ export default function Dashboard({ user, setUser }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-        <Header user={user} setUser={setUser} />
+        <Header />
         <div className="flex items-center justify-center h-96">
           <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
@@ -73,7 +75,7 @@ export default function Dashboard({ user, setUser }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      <Header user={user} setUser={setUser} unreadAlerts={stats.pending} />
+      <Header unreadAlerts={stats.pending} />
 
       <main className="max-w-7xl mx-auto px-6 py-8" data-testid="dashboard-main">
         <div className="mb-8">
